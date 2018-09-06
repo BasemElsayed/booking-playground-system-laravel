@@ -59,17 +59,46 @@ class UserController extends Controller
             'address' => 'required',
             'city' => 'required',
         ]);
+/*
 
+            $table->string('name', 25);
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->string('personalImageUrl')->nullable()->default('https://thumbs.dreamstime.com/b/user-icon-orange-round-sign-vector-illustration-isolated-white-background-user-icon-orange-round-sign-112808533.jpg');
+            $table->string('city', 20)->nullable();
+            $table->string('phone', 11);
+            $table->string('address', 100)->nullable();
+            $table->boolean('admin')->default(0);
+
+*/
         
         
         if ($validator->fails()) 
         { 
             return response()->json($validator->errors(), 401);            
         }
-        
-        $input = $request->all(); 
-        $input['password'] = bcrypt($input['password']); 
-        $user = User::create($input); 
+
+        $user = new User();
+        if($request->hasFile('personalImageUrl'))
+        {
+            $image = $request->file('personalImageUrl');
+            $name = str_slug($request->name) . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $imagePath = $destinationPath . '/' . $name;
+            $image->move($destinationPath, $name);
+            $playground->imageURL = $name;
+        }
+
+        $user->name = $request->get('name');
+        $user->password = bcrypt($input['password']);
+        $user->email = $request->get('email');
+        $user->city = $request->get('city');
+        $user->phone = $request->get('phone');
+        $user->address = $request->get('address');
+        $user->admin = $request->get('admin');
+
+        $user->save();
+
         $success['token'] =  $user->createToken('MyApp')-> accessToken; 
         return response()->json($success, $this-> successStatus); 
     }
