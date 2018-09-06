@@ -148,15 +148,15 @@ class UserController extends Controller
             $input['password'] = bcrypt($input['password']); 
         
 
-            if($request->hasFile('personalImageUrl'))
-            {
-                $image = $request->file('personalImageUrl');
-                $name = str_slug($request->email) . '.' . $image->getClientOriginalExtension();
-                $destinationPath = public_path('/images');
-                $imagePath = $destinationPath . '/' . $name;
-                $image->move($destinationPath, $name);
-                $user->personalImageUrl = $name;
-            }
+        if($request->hasFile('personalImageUrl'))
+        {
+            $image = $request->file('personalImageUrl');
+            $name = str_slug($request->email) . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $imagePath = $destinationPath . '/' . $name;
+            $image->move($destinationPath, $name);
+            $input['personalImageUrl'] = $name;
+        }
         
         
         $user->update($input);
