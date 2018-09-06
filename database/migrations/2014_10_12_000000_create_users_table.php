@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name', 25);
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('personalImageUrl')->nullable();
+            $table->string('personalImageUrl')->nullable()->default('https://thumbs.dreamstime.com/b/user-icon-orange-round-sign-vector-illustration-isolated-white-background-user-icon-orange-round-sign-112808533.jpg');
             $table->string('city', 20)->nullable();
             $table->string('phone', 11);
             $table->string('address', 100)->nullable();

@@ -20,7 +20,7 @@ class CreatePlaygroundsTable extends Migration
             $table->double('price');
             $table->string('address');
             $table->double('area');
-            $table->string('imageURL')->nullable();
+            $table->string('imageURL')->nullable()->default('https://www.berjayahotel.com/sites/default/files/styles/gallery_slide/public/timessquare_55.jpg');
             $table->time('avaiableFrom');
             $table->time('avaiableTo');
             $table->timestamps();

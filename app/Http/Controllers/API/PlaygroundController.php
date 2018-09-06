@@ -38,14 +38,32 @@ class PlaygroundController extends Controller
             'avaiableFrom' => 'required',
             'avaiableTo' => 'required',
         ]);
-
         
         if ($validator->fails()) 
         { 
             return response()->json($validator->errors(), 401);            
         }
-        $input = $request->all(); 
-        $playground = Playground::create($input); 
+
+        $playground = new Playground();
+        if($request->hasFile('imageURL'))
+        {
+            $image = $request->file('image');
+            $name = str_slug($request->name) . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $imagePath = $destinationPath . '/' . $name;
+            $image->move($destinationPath, $name);
+            $playground->imageURL = $name;
+        }
+
+        $playground->name = $request->get('name');
+        $playground->price = $request->get('price');
+        $playground->address = $request->get('address');
+        $playground->area = $request->get('area');
+        $playground->avaiableFrom = $request->get('avaiableFrom');
+        $playground->avaiableTo = $request->get('avaiableTo');
+
+        $playground->save();
+         
         $success['name'] =  $playground->name;
         return response()->json($success, $this-> successStatus); 
     }
