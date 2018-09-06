@@ -47,7 +47,7 @@ class PlaygroundController extends Controller
         $playground = new Playground();
         if($request->hasFile('imageURL'))
         {
-            $image = $request->file('image');
+            $image = $request->file('imageURL');
             $name = str_slug($request->name) . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/images');
             $imagePath = $destinationPath . '/' . $name;
@@ -61,6 +61,7 @@ class PlaygroundController extends Controller
         $playground->area = $request->get('area');
         $playground->avaiableFrom = $request->get('avaiableFrom');
         $playground->avaiableTo = $request->get('avaiableTo');
+        $playground->description = $request->get('description');
 
         $playground->save();
          
