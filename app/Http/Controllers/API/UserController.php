@@ -94,7 +94,6 @@ class UserController extends Controller
         $user->city = $request->get('city');
         $user->phone = $request->get('phone');
         $user->address = $request->get('address');
-        $user->admin = $request->get('admin');
 
         $user->save();
 
