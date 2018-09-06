@@ -15,6 +15,7 @@ class Booking extends Model
         'bookedTimeFrom',
         'bookedTimeTo',
         'approved',
+        'price',
     ];
     
     
