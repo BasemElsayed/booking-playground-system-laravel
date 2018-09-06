@@ -151,7 +151,7 @@ class UserController extends Controller
         if($request->hasFile('personalImageUrl'))
         {
             $image = $request->file('personalImageUrl');
-            $name = str_slug($request->email) . '.' . $image->getClientOriginalExtension();
+            $name = str_slug($user->email) . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/images');
             $imagePath = $destinationPath . '/' . $name;
             $image->move($destinationPath, $name);
