@@ -25,6 +25,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('details', 'API\UserController@details');
     Route::post('viewBooking', 'API\BookingController@showPerUser');
     Route::post('logout','API\UserController@logoutApi');
+    Route::get('findUserById/{id}', 'API\UserController@findUserById');
+
 });
 
 Route::post('addPlayground', 'API\PlaygroundController@addPlayground');

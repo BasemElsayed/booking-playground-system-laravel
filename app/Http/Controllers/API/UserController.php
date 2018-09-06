@@ -114,6 +114,15 @@ class UserController extends Controller
         return response()->json($user, $this-> successStatus); 
     } 
 
+    public function findUserById($id)
+    {
+        $user = User::find($id);
+        if(!$user)
+        {
+            return response()->json('User Not Found', 401); 
+        }
+        return response()->json($user, $this-> successStatus);
+    }
 
     public function update(Request $request, $id)
     {
