@@ -86,11 +86,11 @@ class UserController extends Controller
             $destinationPath = public_path('/images');
             $imagePath = $destinationPath . '/' . $name;
             $image->move($destinationPath, $name);
-            $playground->imageURL = $name;
+            $user->personalImageUrl = $name;
         }
-
+        $input['password'] = bcrypt($input['password']);
         $user->name = $request->get('name');
-        $user->password = bcrypt($input['password']);
+        $user->password = $request->get('password');
         $user->email = $request->get('email');
         $user->city = $request->get('city');
         $user->phone = $request->get('phone');
