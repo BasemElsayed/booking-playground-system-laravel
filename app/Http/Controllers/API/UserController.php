@@ -78,6 +78,7 @@ class UserController extends Controller
             return response()->json($validator->errors(), 401);            
         }
 
+        $checkImage = false;
         $user = new User();
         if($request->hasFile('personalImageUrl'))
         {
@@ -87,6 +88,7 @@ class UserController extends Controller
             $imagePath = $destinationPath . '/' . $name;
             $image->move($destinationPath, $name);
             $user->personalImageUrl = $name;
+            $checkImage = true;
         }
         $user->name = $request->get('name');
         $user->password = bcrypt($request->get('password'));
@@ -95,8 +97,10 @@ class UserController extends Controller
         $user->phone = $request->get('phone');
         $user->address = $request->get('address');
         $user->save();
-
+ 
         $success['token'] =  $user->createToken('MyApp')-> accessToken; 
+        $success['hasFile'] = $checkImage;
+        $success['imageName'] = $user->personalImageUrl;
         return response()->json($success, $this-> successStatus); 
     }
 
