@@ -80,8 +80,8 @@ class UserController extends Controller
 
         $checkImage = false;
         $user = new User();
-        //if($request->hasFile('personalImageUrl'))
-        //{
+        if($request->hasFile('personalImageUrl'))
+        {
             $image = $request->file('personalImageUrl');
             $name = str_slug($request->email) . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/images');
@@ -89,7 +89,7 @@ class UserController extends Controller
             $image->move($destinationPath, $name);
             $user->personalImageUrl = $name;
             $checkImage = true;
-        //}
+        }
         $user->name = $request->get('name');
         $user->password = bcrypt($request->get('password'));
         $user->email = $request->get('email');
