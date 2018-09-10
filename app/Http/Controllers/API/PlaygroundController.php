@@ -124,7 +124,7 @@ class PlaygroundController extends Controller
         if($request->hasFile('imageURL'))
         {
             $image = $request->file('imageURL');
-            $name = str_slug($user->email) . '.' . $image->getClientOriginalExtension();
+            $name = str_slug($playground->name) . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/images');
             $imagePath = $destinationPath . '/' . $name;
             $image->move($destinationPath, $name);
