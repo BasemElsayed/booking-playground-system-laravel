@@ -205,7 +205,12 @@ class BookingController extends Controller
     public function viewAll()
     {
         //
-        $bookings = Booking::all();
+        //$bookings = Booking::all();
+        $bookings = DB::table('playgrounds')
+        ->join('bookings', function($join)
+        {
+            $join->on('bookings.playground_id', '=', 'playgrounds.id');
+        })->get();
         return response()->json($bookings, $this-> successStatus);
     }
 
