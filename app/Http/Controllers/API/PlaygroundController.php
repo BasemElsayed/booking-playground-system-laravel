@@ -119,14 +119,19 @@ class PlaygroundController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-
         $playground = Playground::findOrFail($id);
         $input = $request->all(); 
+        if($request->hasFile('imageURL'))
+        {
+            $image = $request->file('imageURL');
+            $name = str_slug($user->email) . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $imagePath = $destinationPath . '/' . $name;
+            $image->move($destinationPath, $name);
+            $input['imageURL'] = $name;
+        }
         $playground->update($input);
-        
         return $playground;
-
     }
 
     /**
